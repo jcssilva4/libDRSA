@@ -1,0 +1,42 @@
+#ifndef RULE_H
+#define RULE_H
+
+#include "Approximation.h"
+
+//enum RuleType = {ruletype1 = 1, ruletype2 = 2, ruletype3 = 3, ruletype4 = 4};
+
+class Rule
+{
+    public:
+        Rule(int, int);
+        Rule(int, int, bool);
+        virtual ~Rule();
+        void const showRule();
+        bool checkIfCovers(Obj*);
+        void setElemCond(int, double);
+        void setElemCond(int, double, double);
+        void setCoveredObjs(ObjSet_ptr, bool);
+        void delElemCond(int);
+        ObjSet_ptr getCoveredObjs();
+        map <int, double> getElemConds();
+        string getName();
+        void print();
+
+
+    protected:
+
+    private:
+        map <int, double> elementaryConditions; //<criterion_index, evaluation value>
+        int Clt;
+        int rule_type; ///1, 2, 3, 4
+        bool minimal;
+        ObjSet_ptr covered; //objects covered by this rule
+        ObjSet_ptr supported; //objects supported by this rule
+        string name;
+        static int nRules;
+        double eval_measure;
+};
+
+typedef vector<Rule*> RuleSet_ptr;
+
+#endif // RULE_H

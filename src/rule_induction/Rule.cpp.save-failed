@@ -1,0 +1,128 @@
+#include "Rule.h"
+
+int Rule::nRules = 0; //initialize static int
+
+Rule::Rule(int _type, int t)
+{
+    this->rule_type = _type;
+    this->Clt = t;
+    this->nRules++;
+    this->name = "Rule " + to_string(this->nRules);
+    //cout << endl << name << " created / Rule_type = " << this->rule_type << " / nRules: " << this->nRules << endl;
+}
+
+Rule::Rule(int _type, int t, bool testrule) //dont count as a rule
+{
+    this->rule_type = _type;
+    this->Clt = t;
+    this->name = "Rule " + to_string(this->nRules);
+    //cout << endl << name << " created / Rule_type = " << this->rule_type << " / nRules: " << this->nRules << endl;
+}
+
+bool Rule::checkIfCovers(Obj* thisObj){
+    map<int,double> g = thisObj->get_g();
+    if (this->elementaryConditions.size() > 0){ //check if there is any condition available...
+        map<int,double> g = thisObj->get_g();
+        for(map<int, double>::iterator it = this->elementaryConditions.begin(); it != this->elementaryConditions.end(); it++){
+            switch(this->rule_type){
+                case 1: // certain D>= rule
+                case 2:
+                    if (g[it->first] < it->second) return false; //thisObj violates this D>= certain rule
+                    break;
+                case 3:
+                case 4:
+                    if (g[it->first] > it->second) return false; //thisObj violates this D>= certain rule
+                    break;
+            }
+        }
+        return true;
+    }
+    else{ return false;}
+}
+
+void Rule::setElemCond(int q, double elem){
+    this->elementaryConditions[q] = elem;
+}
+
+void Rule::setElemCond(int q, double elem, double eval){
+    this->elementaryConditions[q] = elem;
+    this->eval_measure = eval;
+}
+
+void Rule::delElemCond(int q){
+    this->elementaryConditions.erase(q);
+}
+
+
+void Rule::setCoveredObjs(ObjSet_ptr Universe, bool find_objs){
+    if(this->elementaryConditions.size() == 0){find_objs = false;} //covers the universe...because there is no elementary condition in this rule
+    if(find_objs){
+        if(this->covered.size()==0){ //initialize coveredObjs
+            for (ObjSet_ptr::iterator currentObj = Universe.begin(); currentObj != Universe.end(); ++currentObj){
+                if(this->checkIfCovers((*currentObj))){
+                    this->covered.push_back((*currentObj)); // if current rule covers, include this object
+                };
+            }
+        }
+        else{ //THERE IS ANDs in the rule (new condition was included in the rule)
+            ObjSet_ptr newCovered;
+            for (ObjSet_ptr::iterator currentObj = this->covered.begin(); currentObj != this->covered.end(); ++currentObj){
+                if(this->checkIfCovers((*currentObj))){
+                    newCovered.push_back((*currentObj)); // if current rule doesn't cover delete this object
+                };
+            }
+            this->covered = newCovered;
+        }
+    }
+    else{
+        this->covered = Universe;
+    }
+}
+
+ObjSet_ptr Rule::getCoveredObjs(){
+    return this->covered;
+}
+
+void Rule::print(){
+    //cout << this->rule_type << endl;
+    cout << endl << name << " ";
+    int cntConds = 0;
+    for(map<int, double>::iterator it = this->elementaryConditions.begin(); it != this->elementaryConditions.end(); it++){
+        ++cntConds;
+        switch(this->rule_type){
+            case 1:
+                cout << "q_" << it->first + 1 << " >= " << it->second;
+                if( cntConds < this->elementaryConditions.size() ){ cout << " AND ";}
+                else{cout << " =>  Cl >= " << Clt <<  "( eval = " << this->eval_measure << " )" << endl;}
+                break;
+            case 2:
+                cout << "q_" << it->first + 1 << " >= " << it->second;
+                if( cntConds < this->elementaryConditions.size() ){ cout << " AND ";}
+                else{cout << " =>  (possible)Cl >= " << Clt <<  "( eval = " << this->eval_measure << " )" << endl;}
+                break;
+                break;
+            case 3:
+                cout << "q_" << it->first + 1 << " <= " << it->second;
+                if( cntConds < this->elementaryConditions.size() ){ cout << " AND ";}
+                else{cout << " =>  Cl <= " << Clt << "( eval = " << this->eval_measure << " )" << endl;}
+                break;
+            case 4:
+                cout << "q_" << it->first + 1 << " <= " << it->second;
+                if( cntConds < this->elementaryConditions.size() ){ cout << " AND ";}
+                else{cout << " =>  (possible)Cl <= " << Clt << "( eval = " << this->eval_measure << " )" << endl;}
+                break;
+        }
+    }
+    cout << "covers: { ";
+    for(ObjSet_ptr::iterator thisObj = this->covered.begin(); thisObj != this->covered.end(); thisObj++){
+        cout << (*thisObj)->get_Name() << " ";
+    }
+    cout << "}\n";
+}
+
+map<int, double> Rule::getElemConds(){ return this->elementaryConditions;}
+
+Rule::~Rule()
+{
+    //dtor
+}

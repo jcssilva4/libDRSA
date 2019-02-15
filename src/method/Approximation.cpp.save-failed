@@ -1,0 +1,113 @@
+#include "Approximation.h"
+
+///###################################### BASE CLASS ############################################################################
+Approximation::Approximation(int t, string name){
+    this->name = name;
+    this->t = t;
+    cout << endl << this->name << " approximation created\n";
+}
+
+void const Approximation::showMembers(){
+    cout << endl << endl << this->name << "\n{\n";
+    for (vector<Obj*>::iterator currentObj = this->members.begin(); currentObj != this->members.end(); ++currentObj){
+        cout << (*currentObj)->get_Name() << endl;
+    }
+    cout << "}\n";
+}
+
+Approximation::~Approximation(){
+    //dtor
+}
+///##############################################################################################################################
+
+///###################################### P-Lower approximation of Clt>= ############################################################################
+//ctor
+P_LowUpwd::P_LowUpwd(int t):Approximation(t, "P-Lower(Cl>=" + to_string(t) + ")"){}
+//update members
+void P_LowUpwd::updateMembers(Obj* thisObj){
+    //check if Dp+ is contained in Clt
+    bool obj_belongs = true;
+    vector<Obj*> PdomSet = thisObj->get_PdominatingSet();
+    for (vector<Obj*>::iterator currentObj = PdomSet.begin(); currentObj != PdomSet.end(); ++currentObj){
+        //cout << "\nelement: " << (*currentObj)->get_Class();
+        if((*currentObj)->get_Class() < this->t){
+            //cout << endl << "Name: " << (*currentObj)->get_Name() << " class is " << (*currentObj)->get_Class() << " < " << t;
+            obj_belongs = false;
+            break;
+        }
+    }
+    if(obj_belongs) this->members.push_back(thisObj);
+}
+//dtor
+P_LowUpwd::~P_LowUpwd(){}
+///##################################################################################################################################################
+
+///ERRORR::: OBJECT 9 IS NOT CONTAINED IN P-UPPER CLT>=2 WHY??
+///###################################### P-Upper approximation of Clt>= ############################################################################
+//ctor
+P_UppUpwd::P_UppUpwd(int t):Approximation(t, "P-Upper(Cl>=" + to_string(t) + ")"){}
+//update members
+void P_UppUpwd::updateMembers(Obj* thisObj){
+    //check if Obj belongs to Clt>=
+    if(thisObj->get_Class() >= this->t){
+        vector<Obj*> PdomSet = thisObj->get_PdominatingSet();
+        for (vector<Obj*>::iterator currentObj = PdomSet.begin(); currentObj != PdomSet.end(); ++currentObj){
+            //cout << endl << " obj being analysed -> " << (*currentObj)->get_Name();
+            if(find(this->members.begin(),this->members.end(),(*currentObj)) == this->members.end()){ //check if element is not contained in P-upperClt>=
+                //cout << endl << (*currentObj)->get_Name() << " is not contained in " << this->name;
+                this->members.push_back((*currentObj));
+            }
+        }
+        //this->showMembers();
+        //cout << endl;
+    }
+}
+//dtor
+P_UppUpwd::~P_UppUpwd(){}
+///##################################################################################################################################################
+
+///ERRORR::: OBJECT 9 IS CONTAINED IN P-LOWER CLT<=1 WHY??
+///###################################### P-Lower approximation of Clt<= ############################################################################
+//ctor
+P_LowDnwd::P_LowDnwd(int t):Approximation(t, "P-Lower(Cl<=" + to_string(t) + ")"){}
+//update members
+void P_LowDnwd::updateMembers(Obj* thisObj){
+    //check if Dp+ is contained in Clt
+    bool obj_belongs = true;
+    vector<Obj*> PdomSet = thisObj->get_PdominatedSet();
+    for (vector<Obj*>::iterator currentObj = PdomSet.begin(); currentObj != PdomSet.end(); ++currentObj){
+        //cout << "\nelement: " << (*currentObj)->get_Class();
+        if((*currentObj)->get_Class() > this->t){
+            //cout << endl << "Name: " << (*currentObj)->get_Name() << " class is " << (*currentObj)->get_Class() << " < " << t;
+            obj_belongs = false;
+            break;
+        }
+    }
+    if(obj_belongs) this->members.push_back(thisObj);
+}
+//dtor
+P_LowDnwd::~P_LowDnwd(){}
+///##################################################################################################################################################
+
+///###################################### P-Upper approximation of Clt<= ############################################################################
+//ctor
+P_UppDnwd::P_UppDnwd(int t):Approximation(t, "P-Upper(Cl>=" + to_string(t) + ")"){}
+//update members
+void P_UppDnwd::updateMembers(Obj* thisObj){
+    //check if Obj belongs to Clt>=
+    if(thisObj->get_Class() <= this->t){
+        vector<Obj*> PdomSet = thisObj->get_PdominatedSet();
+        for (vector<Obj*>::iterator currentObj = PdomSet.begin(); currentObj != PdomSet.end(); ++currentObj){
+            //cout << endl << " obj being analysed -> " << (*currentObj)->get_Name();
+            if(find(this->members.begin(),this->members.end(),(*currentObj)) == this->members.end()){ //check if element is not contained in P-upperClt>=
+                //cout << endl << (*currentObj)->get_Name() << " is not contained in " << this->name;
+                this->members.push_back((*currentObj));
+            }
+        }
+        //this->showMembers();
+        //cout << endl;
+    }
+}
+//dtor
+P_UppDnwd::~P_UppDnwd(){}
+///##################################################################################################################################################

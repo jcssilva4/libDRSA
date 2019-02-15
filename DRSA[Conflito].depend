@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1539192934 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa_domlem\main.cpp
+	"include/includes.h"
+
+1539115508 c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa_domlem\include\includes.h
+	<iostream>
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	"DataTable.h"
+
+1539188549 c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa_domlem\include\datatable.h
+	"includes.h"
+
+1539193015 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa_domlem\src\datatable.cpp
+	"DataTable.h"
+
+1539192880 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa_domlem\src\example_2ddynamicarray.c
+
+1539202776 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\main.cpp
+	"DRSA.h"
+
+1539204701 c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\include\includes.h
+	<iostream>
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	"DataTable.h"
+
+1539202677 c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\include\datatable.h
+	"includes.h"
+
+1539204682 c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\include\obj.h
+	"includes.h"
+
+1539199604 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\src\datatable.cpp
+	"DataTable.h"
+
+1539192880 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\src\example_2ddynamicarray.c
+
+1539205314 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\src\machineknowledge\obj.cpp
+	"Obj.h"
+
+1539204780 c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\include\drsa.h
+	"Obj.h"
+
+1539204776 source:c:\users\greefo-caa\google drive\ufpe\greefo\preparacaomestrado\multicriteriaportfolio\drsa\src\method\drsa.cpp
+	"DRSA.h"
+

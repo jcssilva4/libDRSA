@@ -1,0 +1,22 @@
+#ifndef OBJ_H
+#define OBJ_H
+
+#include "includes.h"
+
+class Obj
+{
+    public:
+        Obj();
+        virtual ~Obj();
+
+    protected:
+
+    private:
+        string name; // object's name
+        int cls; // object's class
+        vector<float> g; // criteria evaluation on this object
+        vector<Obj*> PdominatingSet; // set of objects Obj' such that thisObj_g[i] <= Obj'_g[i] for all i
+        vector<Obj*> PdominatedSet; // set of objects Obj' such that thisObj_g[i] >= Obj'_g[i] for all i
+};
+
+#endif // OBJ_H

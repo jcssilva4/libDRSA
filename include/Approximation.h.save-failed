@@ -1,0 +1,52 @@
+#ifndef APPROXIMATION_H
+#define APPROXIMATION_H
+
+#include "Obj.h"
+
+class Approximation
+{
+    public:
+        Approximation(int, string);
+        virtual ~Approximation();
+        //virtual void checkMembership() = 0; //defines abstract class Approximation
+        void const showMembers();
+        virtual void updateMembers(Obj*){};
+
+    protected:
+        string name;
+        int t; //approximate class
+        vector<Obj*> members; //elements that belong to this set
+        void checkMembership(); // does Obj belongs to this set?
+
+    private:
+};
+
+///P-Lower approximation of Clt>=
+class P_LowUpwd: public Approximation
+{
+    public:
+        P_LowUpwd(int);
+        virtual ~P_LowUpwd();
+        void updateMembers(Obj*);
+        void checkMembership(Obj*);
+
+    protected:
+
+    private:
+};
+
+///P-Upper approximation of Clt>=
+class P_UppUpwd: public Approximation
+{
+    public:
+        P_LowUppwd(int);
+        virtual ~P_LowUppwd();
+        void updateMembers(Obj*);
+        void addMember(Obj*);
+
+    protected:
+
+    private:
+};
+
+#endif // APPROXIMATION_H

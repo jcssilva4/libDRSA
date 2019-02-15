@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="DRSA" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/DRSA_DOMLEM" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/DRSA_DOMLEM" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="include/Approximation.h" />
+		<Unit filename="include/DRSA.h" />
+		<Unit filename="include/DataTable.h" />
+		<Unit filename="include/Obj.h" />
+		<Unit filename="include/Rule.h" />
+		<Unit filename="include/RuleInductionAlgorithm.h" />
+		<Unit filename="include/includes.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/DataTable.cpp" />
+		<Unit filename="src/example_2DDynamicArray.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/machineKnowledge/Obj.cpp" />
+		<Unit filename="src/method/Approximation.cpp" />
+		<Unit filename="src/method/DRSA.cpp" />
+		<Unit filename="src/rule_induction/Domlem.cpp" />
+		<Unit filename="src/rule_induction/Rule.cpp" />
+		<Unit filename="src/rule_induction/RuleInductionAlgorithm.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
